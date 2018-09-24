@@ -8,8 +8,6 @@ describe('murmurHash3js', function() {
 
 		murmurHash3.x86.hash32("I will not buy this record, it is scratched.")
 			.should.be.equal(2832214938);
-		murmurHash3.x86.hash128("I will not buy this tobacconist's, it is scratched.")
-			.should.be.equal("9b5b7ba2ef3f7866889adeaf00f3f98e");
 		murmurHash3.x86.hash32("My hovercraft is full of eels.", 0)
 			.should.be.equal(2953494853);
 		murmurHash3.x86.hash32("My hovercraft is full of eels.", 25)
@@ -17,7 +15,6 @@ describe('murmurHash3js', function() {
 		murmurHash3.x86.hash32("My hovercraft is full of eels.", 128)
 			.should.be.equal(2204470254);
 
-		murmurHash3.x86.hash32("I will not buy this record, it is scratched.").should.be.equal(2832214938);
 		murmurHash3.x86.hash32("").should.be.equal(0);
 		murmurHash3.x86.hash32("0").should.be.equal(3530670207);
 		murmurHash3.x86.hash32("01").should.be.equal(1642882560);
@@ -26,6 +23,8 @@ describe('murmurHash3js', function() {
 		murmurHash3.x86.hash32("01234").should.be.equal(433070448);
 		murmurHash3.x86.hash32("", 1).should.be.equal(1364076727);
 
+		murmurHash3.x86.hash128("I will not buy this tobacconist's, it is scratched.")
+			.should.be.equal("9b5b7ba2ef3f7866889adeaf00f3f98e");
 		murmurHash3.x86.hash128("").should.be.equal("00000000000000000000000000000000");
 		murmurHash3.x86.hash128("0").should.be.equal("0ab2409ea5eb34f8a5eb34f8a5eb34f8");
 		murmurHash3.x86.hash128("01").should.be.equal("0f87acb4674f3b21674f3b21674f3b21");
@@ -62,7 +61,6 @@ describe('murmurHash3js', function() {
 		murmurHash3.x64.hash128("My hovercraft is full of eels.", 128)
 			.should.be.equal("898223700c20009cf8b163b4519c7a35");
 
-		murmurHash3.x64.hash128("I will not buy this tobacconist's, it is scratched.").should.be.equal("d30654abbd8227e367d73523f0079673");
 		murmurHash3.x64.hash128("").should.be.equal("00000000000000000000000000000000");
 		murmurHash3.x64.hash128("0").should.be.equal("2ac9debed546a3803a8de9e53c875e09");
 		murmurHash3.x64.hash128("01").should.be.equal("649e4eaa7fc1708ee6945110230f2ad6");
@@ -82,6 +80,33 @@ describe('murmurHash3js', function() {
 		murmurHash3.x64.hash128("0123456789abcdef").should.be.equal("4be06d94cf4ad1a787c35b5c63a708da");
 		murmurHash3.x64.hash128("", 1).should.be.equal("4610abe56eff5cb551622daa78f83583");
 
+
 		done();
+	});
+
+	it('x86_32 for strings with characters with multibyte code points', () => {
+		var murmurHash3 = require('../');
+
+		// the first byte returned by charCodeAt is identical for P and ⭐
+		const asciiHash = murmurHash3.x86.hash32("P");
+		const emojiHash = murmurHash3.x86.hash32("⭐");
+		asciiHash.should.not.equal(emojiHash, "Collision detected hashing '⭐' and 'P'!");
+
+		murmurHash3.x86.hash32("utf-8 supported 🌈").should.equal(2018897981);
+		murmurHash3.x86.hash32("這個有效").should.equal(3018595841);
+	});
+
+	it('x86_128 for strings with characters with multibyte code points', () => {
+		var murmurHash3 = require('../');
+
+    murmurHash3.x86.hash128("utf-8 supported 🌈").should.equal("796479ed1bbff85b29e39731d1967a07");
+    murmurHash3.x86.hash128("這個有效").should.equal("5ee7e60516f613aa76048cdc7a1493e3");
+	});
+
+	it('x64_128 for strings with characters with multibyte code points', () => {
+		var murmurHash3 = require('../');
+
+	  murmurHash3.x64.hash128("utf-8 supported 🌈").should.equal("61dacbe7a7080feea406afcde9477eed");
+    murmurHash3.x64.hash128("這個有效").should.equal("a5df1c1a469c566b03c818b95419ed65");
 	});
 });
