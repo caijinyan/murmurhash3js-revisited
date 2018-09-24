@@ -1,8 +1,7 @@
 {
-  "name": "murmurhash3js",
+  "name": "@cimi/murmurhash3js",
   "version": "3.0.1",
-  "homepage": "http://pid.github.io/murmurHash3js/",
-  "description": "A javascript implementation of MurmurHash3's x86 hashing algorithms.(Browser&Server)",
+  "description": "A JS implementation of the MurmurHash3 algorithms. (browser and server)",
   "keywords": [
     "murmurhash3",
     "hash"
@@ -17,15 +16,20 @@
       "name": "Sascha Droste",
       "email": "pid@posteo.net",
       "url": "https://github.com/pid/"
+    },
+    {
+      "name": "Alex Ciminian",
+      "email": "alex.ciminian@gmail.com",
+      "url": "https://github.com/cimi/"
     }
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pid/murmurHash3js/issues"
+    "url": "https://github.com/cimi/murmurHash3js/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/pid/murmurHash3js.git"
+    "url": "git://github.com/cimi/murmurHash3js.git"
   },
   "main": "index.js",
   "directories": {
@@ -47,6 +51,6 @@
     "should": "^5.2.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=8.0.0"
   }
 }
