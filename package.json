@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@cimi/murmurhash3js": "^3.0.1",
+    "hack": "^0.8.1",
     "murmurhash3js": "^3.0.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
