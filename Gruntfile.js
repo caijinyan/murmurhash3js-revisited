@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             options: {
                 banner: '/* <%= pkg.name %> v<%= pkg.version %> MIT License\n' +
                         '(c) 2012-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %> \n' +
-                        'Maintainer: <%= pkg.contributors[0].name %> <%= pkg.homepage %> */\n',
+                        'Contributors: <%= pkg.contributors[0].name %>, <%= pkg.contributors[1].name %> */\n',
                 max_line_length: 500
             },
             build: {
