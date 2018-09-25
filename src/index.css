@@ -1,0 +1,18 @@
+.input, .success, .failure {
+  vertical-align: middle;
+}
+
+.input {
+  width: 40%;
+}
+
+.success, .failure {
+  width: 20%;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.failure {
+  background-color: #f8d7da;
+  color: #721c24;
+}
