@@ -1,7 +1,7 @@
 {
-  "name": "@cimi/murmurhash3js",
-  "version": "3.0.1",
-  "description": "A JS implementation of the MurmurHash3 algorithms. (browser and server)",
+  "name": "murmurhash3js-revisited",
+  "version": "3.0.0-alpha",
+  "description": "MurmurHash3 in JavaScript, matches the reference implementation (C++), runnable in node and browser.",
   "keywords": [
     "murmurhash3",
     "hash"
@@ -25,11 +25,11 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cimi/murmurHash3js/issues"
+    "url": "https://github.com/cimi/murmurhash3js-revisited/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cimi/murmurHash3js.git"
+    "url": "git://github.com/cimi/murmurhash3js-revisited.git"
   },
   "main": "index.js",
   "directories": {
