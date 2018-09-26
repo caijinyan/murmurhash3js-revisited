@@ -19,7 +19,7 @@ function bufferToHex(buffer) {
 }
 
 window.onload = () => {
-  const module = WasmLoader({ locateFile: () => '/SMHasher.wasm' });
+  const module = WasmLoader({ locateFile: () => '/murmurhash3js-revisited/SMHasher.wasm' });
 
   const bytes = str => new TextEncoder().encode(str);
 
