@@ -5,7 +5,7 @@ describe('murmurHash3js', function() {
 
 	const murmurHash3 = require('../');
 
-	const utf8Bytes = (str) => Buffer.from(str);
+	const utf8Bytes = (str) => new Uint8Array(Buffer.from(str));
 
 	const hash_x86_32 = (str, seed = 0) => murmurHash3.x86.hash32(utf8Bytes(str), seed);
 	const hash_x86_128 = (str, seed = 0) => murmurHash3.x86.hash128(utf8Bytes(str), seed);
@@ -102,5 +102,24 @@ describe('murmurHash3js', function() {
 		const asciiHash = murmurHash3.x86.hash32(utf8Bytes("P"));
 		const emojiHash = murmurHash3.x86.hash32(utf8Bytes("⭐"));
 		asciiHash.should.not.equal(emojiHash, "Collision detected hashing '⭐' and 'P'!");
+	});
+
+	it('should take the inputValidation flag into consideration', () => {
+		murmurHash3.inputValidation = false;
+		murmurHash3.x86.hash32("invalid input").should.not.equal(undefined);
+		murmurHash3.x86.hash128(["another", "one"]).should.not.equal(undefined);
+		murmurHash3.x64.hash128([1234, 5678, 9999]).should.not.equal(undefined);
+		murmurHash3.x86.hash32(10010).should.not.equal(undefined);
+		try {
+			murmurHash3.x86.hash32(undefined);
+		} catch (e) {
+			// error expected
+		}
+		murmurHash3.inputValidation = true;
+		(murmurHash3.x86.hash32("invalid input") === undefined).should.equal(true);
+		(murmurHash3.x86.hash128(["another", "one"]) === undefined).should.equal(true);
+		(murmurHash3.x64.hash128([1234, 5678, 9999]) === undefined).should.equal(true);
+		(murmurHash3.x86.hash32(10010) === undefined).should.equal(true);
+		(murmurHash3.x86.hash32(undefined) === undefined).should.equal(true);
 	});
 });
