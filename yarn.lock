@@ -4503,6 +4503,14 @@ murmur-128@^0.1.1:
     fmix "^0.1.0"
     imul "^1.0.0"
 
+murmur-32@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/murmur-32/-/murmur-32-0.1.0.tgz#c1a79d4fc5fabf0405749d0aff77c41402055861"
+  dependencies:
+    array-buffer-from-string "^0.1.0"
+    fmix "^0.1.0"
+    imul "^1.0.0"
+
 murmur.js@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/murmur.js/-/murmur.js-1.0.0.tgz#37248f51c9ebcbd04017a12f2d138ed50ac1b929"

@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import murmurhash3jsOriginal from "murmurhash3js";
 import murmurhash3jsModified from "@cimi/murmurhash3js";
-import murmurGuava from "murmur-128";
+import murmur32x86 from "murmur-32";
+import murmur128x86 from "murmur-128";
 import imurmurhash from "imurmurhash";
 import murmurjs from 'murmur.js';
 
@@ -11,11 +12,10 @@ import './index.css';
 import WasmLoader from "./SMHasher";
 
 function bufferToHex(buffer) {
-  console.log(new Uint32Array(buffer));
-  return Array
+  const hexBytes = Array
       .from(new Uint32Array(buffer))
-      .map(byte => byte.toString(16).padStart(8, "0"))
-      .join("");
+      .map(byte => byte.toString(16).padStart(8, "0"));
+  return hexBytes.join("");
 }
 
 window.onload = () => {
@@ -43,9 +43,10 @@ window.onload = () => {
       "x86  32bit": str => parseInt(murmurjs(str), 36)
     },
     // cannot match output - Uint32Array[4] can't be converted to Uint64[2]
-    // "murmur-128": {
-    //   "x64 128bit": str => bufferToHex(murmurGuava(str))
-    // },
+    "murmur-32/128": {
+      "x86  32bit": str => new Uint32Array(murmur32x86(bytes(str).buffer))[0],
+      "x86 128bit": str => bufferToHex(murmur128x86(bytes(str).buffer))
+    },
     "imurmurhash.js": {
       "x86  32bit": str => imurmurhash(str).result()
     }
