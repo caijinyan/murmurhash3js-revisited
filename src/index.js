@@ -5,7 +5,6 @@ import murmurhash3jsModified from "@cimi/murmurhash3js";
 import murmur32x86 from "murmur-32";
 import murmur128x86 from "murmur-128";
 import imurmurhash from "imurmurhash";
-import murmurjs from 'murmur.js';
 
 import App from "./App";
 import './index.css';
@@ -19,6 +18,7 @@ function bufferToHex(buffer) {
 }
 
 window.onload = () => {
+  // to run locally, the path prefix must be removed as the server runs on localhost:3000/
   const module = WasmLoader({ locateFile: () => '/murmurhash3js-revisited/SMHasher.wasm' });
 
   const bytes = str => new TextEncoder().encode(str);
@@ -39,9 +39,12 @@ window.onload = () => {
       "x86 128bit": murmurhash3jsOriginal.x86.hash128,
       "x64 128bit": murmurhash3jsOriginal.x64.hash128
     },
-    "murmur.js": {
-      "x86  32bit": str => parseInt(murmurjs(str), 36)
-    },
+    // this implementation yields wrong results for all test cases and only implments 32 bit
+    // excluding for now as it breaks formatting of the other two tables
+    // import murmurjs from 'murmur.js';
+    // "murmur.js": {
+    //   "x86  32bit": str => parseInt(murmurjs(str), 36)
+    // },
     "murmur-32/128": {
       "x86  32bit": str => new Uint32Array(murmur32x86(bytes(str).buffer))[0],
       "x86 128bit": str => bufferToHex(murmur128x86(bytes(str).buffer))

@@ -130,7 +130,8 @@ const links = {
   smhasherWasm: "https://github.com/cimi/smhasher",
   forkedFrom: "https://github.com/pid/murmurHash3js",
   jsPerfUtf8: "https://jsperf.com/string-to-utf-8-bytes",
-  canIUse: "https://caniuse.com/#search=TextEncoder"
+  canIUse: "https://caniuse.com/#search=TextEncoder",
+  docs: "https://github.com/cimi/murmurhash3js-revisited/tree/docs"
 };
 
 class App extends Component {
@@ -190,11 +191,13 @@ class App extends Component {
         <h2 id="comparison">Comparison with other implementations</h2>
 
         <h3>Notes</h3>
-
-        <p>Only implementations published on npm were considered for testing.</p>
-        <p>The output representation was chosen to match murmurhash3js. Each section describes how its output is represented.</p>
-        <p>The C++ reference implementation is run in the browser through WebAssembly
-        (<a href={links['smhasherWasm']} target="_blank">see how it was compiled</a>).</p>
+        <ul>
+          <li>Only implementations published on npm were considered for testing, and I didn't have time to go through all of them.</li>
+          <li>The output representation was chosen to match murmurhash3js. Each section describes how its output is represented.</li>
+          <li>The C++ reference implementation is run in the browser through WebAssembly
+          (<a href={links['smhasherWasm']} target="_blank">see how it was compiled</a>).</li>
+          <li>If you'd like me to include another implementation in the test, I'm happy to do it. Please cut an issue in the GH repo.</li>
+        </ul>
 
         <h3>x86  32bit</h3>
         <p>The output is represented as a 32 bit unsigned integer.</p>
@@ -208,6 +211,13 @@ class App extends Component {
         <h3>x64 128bit</h3>
         <p>The output is a hex string: the little endian representation of two 64 bit unsigned integers.</p>
         <Table hashes={hashes} variant="x64 128bit" inputs={allTests} />
+
+        <div style={{ textAlign: "center"}}>
+          <hr />
+          <p>If you're curious how this page was created, check out <a href={links['docs']}
+            _target="_blank">the <code>docs</code> branch in the GitHub repo.</a></p>
+          <p>Made with <span role="img" aria-label="love">❤️</span> in London</p>
+        </div>
       </div>
     );
   }
