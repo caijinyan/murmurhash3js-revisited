@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import 'hack';
+import Prism from 'prismjs';
+import "./prism.css";
+
+import usageCodeSample from './code-samples/usage';
+import utf8BytesSample from './code-samples/utf8-bytes';
 
 const notImplemented = () => undefined;
 
@@ -129,6 +134,10 @@ const links = {
 };
 
 class App extends Component {
+  componentDidMount() {
+    Prism.highlightAll();
+  }
+
   render() {
     const { hashes } = this.props;
     return (
@@ -137,7 +146,7 @@ class App extends Component {
 
         <h2>Why another variant?</h2>
 
-        <p>All the JS murmurhash implementations I've tried either didn't match
+        <p>All the JS murmurhash3 implementations I've tried either didn't match
           the C++ reference implementation in all cases or didn't implement all three
           variants (x86 32bit, x86 128bit and x64 128bit).</p>
 
@@ -162,34 +171,7 @@ class App extends Component {
 
         <h2>Usage</h2>
 
-        <pre class="language-js"><code>
-{`        import MurmurHash3 from 'murmurhash3js-revisited';
-
-        const str = "My hovercraft is full of eels.";
-        const bytes = new TextEncoder().encode(str);
-
-        MurmurHash3.x86.hash32(bytes);
-        // output: 2953494853
-
-        MurmurHash3.x86.hash128(bytes);
-        // output: e3a186aee169ba6c6a8bd9343c68fa9c
-
-        MurmurHash3.x64.hash128(bytes);
-        // output: 03e5e14d358c16d1e5ae86df7ed5cfcb
-
-        MurmurHash3.x86.hash32("any string");
-        // output: undefined
-        // (x86.hash128 and x64.hash128 also return undefined)
-
-        MurmurHash3.x86.hash32(["a", "b", "c"]);
-        // output: undefined
-        // (x86.hash128 and x64.hash128 also return undefined)
-
-        MurmurHash3.x86.hash32(anyOtherInvalidInput);
-        // output: undefined
-        // (x86.hash128 and x64.hash128 also return undefined)
-`}
-        </code></pre>
+        <pre><code className="language-javascript">{usageCodeSample}</code></pre>
 
 
         <div class="alert alert-warning"><strong>Warning:</strong> encoding strings into
@@ -202,19 +184,7 @@ class App extends Component {
         <p>If you <em>know</em> that your input is predominanty made of single byte ASCII characters,
           you can try to decode only when you detect multibyte characters:</p>
 
-        <pre><code>
-{`        const getUtf8Bytes = (str) => {
-          const result = [];
-          for (let i = 0; i < str.length; i++) {
-            const charCode = str.charCodeAt(i);
-            if (charCode < 0 || charCode > 127) {
-              return new TextEncoder().encode(str);
-            }
-            result.push(charCode);
-          }
-          return result;
-        }
-`}</code></pre>
+        <pre><code className="language-javascript">{utf8BytesSample}</code></pre>
         <p><a href={links['jsPerfEncoder']}>See a JSPerf evaluation of this method</a>.</p>
 
         <h2 id="comparison">Comparison with other implementations</h2>
