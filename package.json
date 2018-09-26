@@ -1,6 +1,6 @@
 {
   "name": "murmurhash3js-revisited",
-  "version": "3.0.0-alpha",
+  "version": "3.0.0-alpha-rc2",
   "description": "MurmurHash3 in JavaScript, matches the reference implementation (C++), runnable in node and browser.",
   "keywords": [
     "murmurhash3",
