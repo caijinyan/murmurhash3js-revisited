@@ -29,7 +29,7 @@ window.onload = () => {
       "x86 128bit": module.cwrap('MurmurHash3_x86_128_reference', 'string', ['string']),
       "x64 128bit": module.cwrap('MurmurHash3_x64_128_reference', 'string', ['string'])
     },
-    "@cimi/murmurhash3js": {
+    "murmurhash3js-revisited": {
       "x86  32bit": str => murmurhash3jsModified.x86.hash32(bytes(str)),
       "x86 128bit": str => murmurhash3jsModified.x86.hash128(bytes(str)),
       "x64 128bit": str => murmurhash3jsModified.x64.hash128(bytes(str))

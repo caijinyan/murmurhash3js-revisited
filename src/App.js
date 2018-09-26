@@ -152,7 +152,7 @@ class App extends Component {
     const { hashes } = this.props;
     return (
       <div className="container">
-        <h1>MurmurHash3 revisited</h1>
+        <h1>MurmurHash3 revisited in JavaScript</h1>
 
         <h2>Why another variant?</h2>
 
@@ -182,7 +182,7 @@ class App extends Component {
         <h2>Usage</h2>
 
         <pre class="language-js"><code>
-{`        import MurmurHash3 from 'murmurhash3-revisited';
+{`        import MurmurHash3 from 'murmurhash3js-revisited';
 
         const str = "My hovercraft is full of eels.";
         const bytes = new TextEncoder().encode(str);
