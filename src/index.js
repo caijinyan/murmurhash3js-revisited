@@ -42,7 +42,6 @@ window.onload = () => {
     "murmur.js": {
       "x86  32bit": str => parseInt(murmurjs(str), 36)
     },
-    // cannot match output - Uint32Array[4] can't be converted to Uint64[2]
     "murmur-32/128": {
       "x86  32bit": str => new Uint32Array(murmur32x86(bytes(str).buffer))[0],
       "x86 128bit": str => bufferToHex(murmur128x86(bytes(str).buffer))
