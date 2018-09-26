@@ -1,4 +1,4 @@
-.input, .success, .failure {
+.input, .success, .failure, .not-implemented {
   vertical-align: middle;
 }
 
@@ -6,7 +6,7 @@
   width: 40%;
 }
 
-.success, .failure {
+.success, .failure, .not-implemented {
   width: 20%;
   text-align: center;
   word-wrap: break-word;
@@ -15,4 +15,10 @@
 .failure {
   background-color: #f8d7da;
   color: #721c24;
+}
+
+.not-implemented {
+  width: 10%;
+  background-color: #fff3cd;
+  color: #856404;
 }

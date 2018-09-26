@@ -2,18 +2,37 @@ import React, { Component } from 'react';
 import 'hack';
 import logo from './logo.svg';
 
-const notImplemented = () => "N/A";
+const notImplemented = () => undefined;
 
 const Result = ({ variant, input, hashes }) => {
   const hashFns = Object.keys(hashes).map(name => hashes[name][variant] || notImplemented);
   const outputs = hashFns.map(hashFn => hashFn(input));
-  const correct = output => (output + "") === (outputs[0] + "");
-  const format = output => output.length === 32 ? <span>{output.slice(0, 16)}<wbr />{output.slice(16)}</span> : output;
+
+  const status = output => {
+    if (!output) {
+      return 'not-implemented';
+    } else if ((output + "") === (outputs[0] + "")) {
+      return 'success';
+    } else {
+      return 'failure';
+    }
+  };
+
+  const format = output => {
+    if (!output) {
+      return "N/A";
+    } else if (output.length === 32) {
+      return <span>{output.slice(0, 16)}<wbr />{output.slice(16)}</span>;
+    } else if (output) {
+      return output;
+    }
+  };
+
   return (
     <tr>
       <td className="input">{input}</td>
       {outputs.map((output, idx) =>
-        (<td key={idx} className={correct(output) ? 'success' : 'failure'}>{format(output)}</td>))}
+        (<td key={idx} className={status(output)}>{format(output)}</td>))}
     </tr>
   );
 };
@@ -37,7 +56,7 @@ const Table = ({ hashes, variant, inputs }) => {
     <table>
       <Heading hashes={hashes} variant={variant} />
       <tbody>
-        {inputs.map(input => <Result hashes={hashes} variant={variant} input={input} />)}
+        {inputs.map(input => <Result key={input} hashes={hashes} variant={variant} input={input} />)}
       </tbody>
     </table>
   );
@@ -60,13 +79,14 @@ class App extends Component {
     const { hashes } = this.props;
     return (
       <div className="container">
+        <p>Only implementations published on npm were tested.</p>
+        <p>The output was made to match murmurhash3js.</p>
+        <p>The C++ reference implementation is run in the browser through WebAssembly
+        (<a href=''>see how it was compiled</a>).</p>
         <Table hashes={hashes} variant="x86  32bit" inputs={shortTests} />
         {/* the long tests cases are not used in the first table for aesthetic reasons */}
         <Table hashes={hashes} variant="x86 128bit" inputs={allTests} />
         <Table hashes={hashes} variant="x64 128bit" inputs={allTests} />
-        <p>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
     );
   }
