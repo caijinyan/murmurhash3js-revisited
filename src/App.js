@@ -48,6 +48,29 @@ const Heading = ({ variant, hashes }) => {
   );
 }
 
+const ResetButton = ({ onClick, disabled }) => {
+  const text = "Reset to original test cases";
+  const className = disabled ? "disabled" : "";
+  return <p><a onClick={onClick} className={className}>{text}</a></p>;
+  console.log(disabled);
+  if (disabled) {
+    return (
+      <button
+        className="btn btn-default btn-ghost"
+        onClick={onClick}
+        disabled
+        >{text}</button>
+    );
+  } else {
+    return (
+      <button
+        className="btn btn-error btn-ghost"
+        onClick={onClick}
+        >{text}</button>
+    );
+  }
+}
+
 // order of the names must be consistent
 // name, variant => hashes[name][variant]
 // variant, name => hashes[variant][name]
@@ -73,28 +96,37 @@ class Table extends React.Component {
     }
   }
 
+  handleReset() {
+    this.setState({ inputs: this.props.inputs });
+  }
+
   render() {
     const { hashes, variant } = this.props;
     const { inputs } = this.state;
     return (
-      <table>
-        <Heading hashes={hashes} variant={variant} />
-        <tbody>
-          {inputs.map(input => <Result key={input} hashes={hashes} variant={variant} input={input} />)}
-        </tbody>
-        <tfoot>
-          <tr>
-            <th scope="row">Add input:</th>
-            <td>
-              <input
-                value={this.state.inputValue}
-                onChange={evt => this.handleChange(evt)}
-                onKeyPress={evt => this.handleKeyPress(evt)}
-              />
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      <div>
+        <table>
+          <Heading hashes={hashes} variant={variant} />
+          <tbody>
+            {inputs.map(input => <Result key={input} hashes={hashes} variant={variant} input={input} />)}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" className='input'>Try your own:</th>
+              <td>
+                <input
+                  value={this.state.inputValue}
+                  onChange={evt => this.handleChange(evt)}
+                  onKeyPress={evt => this.handleKeyPress(evt)}
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        {inputs.length !== this.props.inputs.length
+          ? <ResetButton onClick={() => this.handleReset()} /> : null}
+
+      </div>
     );
   }
 };

@@ -1,4 +1,4 @@
-.input, .success, .failure, .not-implemented {
+table th, table td {
   vertical-align: middle;
 }
 
@@ -21,4 +21,13 @@
   width: 10%;
   background-color: #fff3cd;
   color: #856404;
+}
+
+a.disabled {
+  cursor: default;
+  color: gray;
+}
+
+a.disabled:hover {
+  background-color: white;
 }
