@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'hack';
-import logo from './logo.svg';
 
 const notImplemented = () => undefined;
 
@@ -48,28 +47,10 @@ const Heading = ({ variant, hashes }) => {
   );
 }
 
-const ResetButton = ({ onClick, disabled }) => {
+const ResetButton = ({ onClick }) => {
   const text = "Reset to original test cases";
-  const className = disabled ? "disabled" : "";
-  return <p><a onClick={onClick} className={className}>{text}</a></p>;
-  console.log(disabled);
-  if (disabled) {
-    return (
-      <button
-        className="btn btn-default btn-ghost"
-        onClick={onClick}
-        disabled
-        >{text}</button>
-    );
-  } else {
-    return (
-      <button
-        className="btn btn-error btn-ghost"
-        onClick={onClick}
-        >{text}</button>
-    );
-  }
-}
+  return <p><a onClick={onClick}>{text}</a></p>;
+};
 
 class Table extends React.Component {
   constructor(props) {
@@ -160,7 +141,7 @@ class App extends Component {
           the C++ reference implementation in all cases or didn't implement all three
           variants (x86 32bit, x86 128bit and x64 128bit).</p>
 
-        <p>This implementation was forked from <a href={links['forkedFrom']}>pid/murmurhash3js</a>.
+        <p>This implementation was forked from <a href={links['forkedFrom']} target="_blank">pid/murmurhash3js</a>.
           The core algorithm is the same, but there is one important distinction: all variants
           now expect an array of bytes (i.e. <code>Uint8</code> or just plain numbers between 0
           and 255) as input instead of a string.</p>
@@ -212,10 +193,10 @@ class App extends Component {
 
 
         <div class="alert alert-warning"><strong>Warning:</strong> encoding strings into
-        bytes <a href={links['jsPerfEncoder']}>is more expensive</a> than calling <code>charCodeAt</code> on
+        bytes <a href={links['jsPerfEncoder']} target="_blank">is much more expensive</a> than calling <code>charCodeAt</code> on
         every character.</div>
 
-        <div class="alert alert-warning"><strong>Warning:</strong> <a href={links['canIuse']}>older
+        <div class="alert alert-warning"><strong>Warning:</strong> <a href={links['canIuse']} target="_blank">older
         browsers don't have <code>TextEncoder</code></a> and the polyfills I've tried were ~10x slower.</div>
 
         <p>If you <em>know</em> that your input is predominanty made of single byte ASCII characters,
@@ -234,6 +215,7 @@ class App extends Component {
           return result;
         }
 `}</code></pre>
+        <p><a href={links['jsPerfEncoder']}>See a JSPerf evaluation of this method</a>.</p>
 
         <h2 id="comparison">Comparison with other implementations</h2>
 
