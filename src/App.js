@@ -71,9 +71,6 @@ const ResetButton = ({ onClick, disabled }) => {
   }
 }
 
-// order of the names must be consistent
-// name, variant => hashes[name][variant]
-// variant, name => hashes[variant][name]
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -142,18 +139,113 @@ const allTests = [
   "I will not buy this tobaconnists, it is scratched.",
 ].concat(shortTests);
 
+
+const links = {
+  smhasherWasm: "https://github.com/cimi/smhasher",
+  forkedFrom: "https://github.com/pid/murmurHash3js",
+  jsPerfUtf8: "https://jsperf.com/string-to-utf-8-bytes",
+  canIUse: "https://caniuse.com/#search=TextEncoder"
+};
+
 class App extends Component {
   render() {
     const { hashes } = this.props;
     return (
       <div className="container">
-        <p>Only implementations published on npm were tested.</p>
-        <p>The output representation was chosen to match murmurhash3js.</p>
+        <h1>MurmurHash3 revisited</h1>
+
+        <h2>Why another variant?</h2>
+
+        <p>All the JS murmurhash implementations I've tried either didn't match
+          the C++ reference implementation in all cases or didn't implement all three
+          variants (x86 32bit, x86 128bit and x64 128bit).</p>
+
+        <p>This implementation was forked from <a href={links['forkedFrom']}>pid/murmurhash3js</a>.
+          The core algorithm is the same, but there is one important distinction: all variants
+          now expect an array of bytes (i.e. <code>Uint8</code> or just plain numbers between 0
+          and 255) as input instead of a string.</p>
+
+        <p>Most other implementations expect strings as input and do <code>string.charCodeAt(idx)</code>,
+          some with a byte mask (<code>& 0xff</code>) on the characters from the input to get the bytes
+          that need to be hashed. For strings made of single byte ASCII characters this representation
+          is identical to e.g. the utf-8 byte representation, but if the string contains any other
+          characters the output diverges compared to any string binary encoding.</p>
+
+        <p>Because I was already using the output from the <code>murmurhash3js</code> library, I haven't
+          changed its representation.</p>
+
+        <p>Please use the <a href="#comparison">interactive comparison below</a> to check the output
+          from the JS functions against the C++ reference implementation. The C++ implementation is
+          running in your browser through WebAssembly! <a href={links['smhasherWasm']}
+          target="_blank">(see how it was compiled)</a></p>
+
+        <h2>Usage</h2>
+
+        <pre class="language-js"><code>
+{`        import MurmurHash3 from 'murmurhash3-revisited';
+
+        const str = "My hovercraft is full of eels.";
+        const bytes = new TextEncoder().encode(str);
+
+        MurmurHash3.x86.hash32(bytes);
+        // output: 2953494853
+
+        MurmurHash3.x86.hash128(bytes);
+        // output: e3a186aee169ba6c6a8bd9343c68fa9c
+
+        MurmurHash3.x64.hash128(bytes);
+        // output: 03e5e14d358c16d1e5ae86df7ed5cfcb
+
+        MurmurHash3.x86.hash32("any string");
+        // output: undefined
+        // (x86.hash128 and x64.hash128 also return undefined)
+
+        MurmurHash3.x86.hash32(["a", "b", "c"]);
+        // output: undefined
+        // (x86.hash128 and x64.hash128 also return undefined)
+
+        MurmurHash3.x86.hash32(anyOtherInvalidInput);
+        // output: undefined
+        // (x86.hash128 and x64.hash128 also return undefined)
+`}
+        </code></pre>
+
+
+        <div class="alert alert-warning"><strong>Warning:</strong> encoding strings into
+        bytes <a href={links['jsPerfEncoder']}>is more expensive</a> than calling <code>charCodeAt</code> on
+        every character.</div>
+
+        <div class="alert alert-warning"><strong>Warning:</strong> <a href={links['canIuse']}>older
+        browsers don't have <code>TextEncoder</code></a> and the polyfills I've tried were ~10x slower.</div>
+
+        <p>If you <em>know</em> that your input is predominanty made of single byte ASCII characters,
+          you can try to decode only when you detect multibyte characters:</p>
+
+        <pre><code>
+{`        const getUtf8Bytes = (str) => {
+          const result = [];
+          for (let i = 0; i < str.length; i++) {
+            const charCode = str.charCodeAt(i);
+            if (charCode < 0 || charCode > 127) {
+              return new TextEncoder().encode(str);
+            }
+            result.push(charCode);
+          }
+          return result;
+        }
+`}</code></pre>
+
+        <h2 id="comparison">Comparison with other implementations</h2>
+
+        <h3>Notes</h3>
+
+        <p>Only implementations published on npm were considered for testing.</p>
+        <p>The output representation was chosen to match murmurhash3js. Each section describes how its output is represented.</p>
         <p>The C++ reference implementation is run in the browser through WebAssembly
-        (<a href=''>see how it was compiled</a>).</p>
+        (<a href={links['smhasherWasm']} target="_blank">see how it was compiled</a>).</p>
 
         <h3>x86  32bit</h3>
-        <p>The output is represented as a 32 bit unsigned integer</p>
+        <p>The output is represented as a 32 bit unsigned integer.</p>
         <Table hashes={hashes} variant="x86  32bit" inputs={shortTests} />
         {/* the long tests cases are not used in the first table for aesthetic reasons */}
 
