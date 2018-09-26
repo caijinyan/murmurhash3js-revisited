@@ -1,20 +1,25 @@
 {
   "name": "murmurhash3js-revisited-documentation",
+  "homepage": "https://cimi.io/murmurhash3js-revisited",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@cimi/murmurhash3js": "^3.0.1",
+    "gh-pages": "^2.0.0",
     "hack": "^0.8.1",
     "imurmurhash": "^0.1.4",
     "murmur-128": "^0.1.1",
     "murmur-32": "^0.1.0",
     "murmur.js": "^1.0.0",
     "murmurhash3js": "^3.0.1",
+    "prismjs": "^1.15.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "1.1.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "npm run build && node deploy.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

@@ -174,11 +174,11 @@ class App extends Component {
         <pre><code className="language-javascript">{usageCodeSample}</code></pre>
 
 
-        <div class="alert alert-warning"><strong>Warning:</strong> encoding strings into
+        <div className="alert alert-warning"><strong>Warning:</strong> encoding strings into
         bytes <a href={links['jsPerfEncoder']} target="_blank">is much more expensive</a> than calling <code>charCodeAt</code> on
         every character.</div>
 
-        <div class="alert alert-warning"><strong>Warning:</strong> <a href={links['canIuse']} target="_blank">older
+        <div className="alert alert-warning"><strong>Warning:</strong> <a href={links['canIuse']} target="_blank">older
         browsers don't have <code>TextEncoder</code></a> and the polyfills I've tried were ~10x slower.</div>
 
         <p>If you <em>know</em> that your input is predominanty made of single byte ASCII characters,
