@@ -73,8 +73,8 @@ class Table extends React.Component {
   };
 
   handleKeyPress(evt) {
-    if(evt.which === 13) {
-      const { inputs, inputValue } = this.state;
+    const { inputs, inputValue } = this.state;
+    if (evt.which === 13 && inputValue) {
       this.setState({ inputs: inputs.concat([inputValue]), inputValue: '' });
     }
   }

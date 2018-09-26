@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import murmurhash3jsOriginal from "murmurhash3js";
-import murmurhash3jsModified from "@cimi/murmurhash3js";
+import murmurhash3jsRevisited from "murmurhash3js-revisited";
 import murmur32x86 from "murmur-32";
 import murmur128x86 from "murmur-128";
 import imurmurhash from "imurmurhash";
@@ -30,9 +30,9 @@ window.onload = () => {
       "x64 128bit": module.cwrap('MurmurHash3_x64_128_reference', 'string', ['string'])
     },
     "murmurhash3js-revisited": {
-      "x86  32bit": str => murmurhash3jsModified.x86.hash32(bytes(str)),
-      "x86 128bit": str => murmurhash3jsModified.x86.hash128(bytes(str)),
-      "x64 128bit": str => murmurhash3jsModified.x64.hash128(bytes(str))
+      "x86  32bit": str => murmurhash3jsRevisited.x86.hash32(bytes(str)),
+      "x86 128bit": str => murmurhash3jsRevisited.x86.hash128(bytes(str)),
+      "x64 128bit": str => murmurhash3jsRevisited.x64.hash128(bytes(str))
     },
     murmurhash3js: {
       "x86  32bit": murmurhash3jsOriginal.x86.hash32,
