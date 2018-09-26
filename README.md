@@ -97,3 +97,42 @@ Changlog
 --------
 
 [CHANGLELOG.md](https://github.com/cimi/murmurHash3js/blob/master/CHANGELOG.md)
+
+
+### Other implementations
+
+
+* https://github.com/karanlyons/murmurHash3.js
+
+* https://github.com/garycourt/murmurhash-js
+* https://github.com/kazuyukitanimura/murmurhash-js
+* https://github.com/jensyt/imurmurhash-js
+* https://github.com/matthewmueller/murmur.js
+* https://github.com/ajoslin/murmurhash-v3
+
+* https://github.com/saintplay/murmurhash
+
+* https://github.com/levitation/murmurhash-js
+
+
+* https://github.com/whitequark/murmurhash3-js
+
+* https://github.com/vnykmshr/murmur-hash
+
+* https://github.com/LinusU/murmur-128
+* https://github.com/LinusU/array-buffer-from-string
+
+```
+ var view = new Uint16Array(length)
+
+  for (var i = 0; i < length; i++) {
+    view[i] = input.charCodeAt(i)
+  }
+```
+Hashing char codes instead of utf-8 bytes?
+
+* https://github.com/chriskr/murmurhash3_128
+(no `package.json`, Uses textEncoder internally)
+
+* https://github.com/aggregateknowledge/js-murmur3-128
+(no package.json, has pom.xml, guava compat)
