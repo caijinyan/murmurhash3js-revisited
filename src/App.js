@@ -65,14 +65,14 @@ class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: ''
+      inputValue: '',
+      inputs: this.props.inputs
     };
-    this.state = { inputs: this.props.inputs };
   }
 
   handleChange(evt) {
     this.setState({
-      inputValue: evt.target.value
+      inputValue: evt.target.value || ''
     });
   };
 
@@ -95,6 +95,7 @@ class Table extends React.Component {
         <table>
           <Heading hashes={hashes} variant={variant} />
           <tbody>
+            {/* results are re-computed every time a key is pressed - hey, this is a demo! */}
             {inputs.map(input => <Result key={input} hashes={hashes} variant={variant} input={input} />)}
           </tbody>
           <tfoot>
@@ -174,9 +175,10 @@ class App extends Component {
           changed its representation.</p>
 
         <p>Please use the <a href="#comparison">interactive comparison below</a> to check the output
-          from the JS functions against the C++ reference implementation. The C++ implementation is
-          running in your browser through WebAssembly! <a href={links['smhasherWasm']}
-          target="_blank">(see how it was compiled)</a></p>
+          from the JS functions against the C++ reference implementation.</p>
+
+        <p>The C++ implementation is running in your browser through WebAssembly - check your console! (<a href={links['smhasherWasm']}
+          target="_blank">see how it was compiled here</a>)</p>
 
         <h2>Usage</h2>
         <CodeSnippet code={usageSample} language="javascript" />
