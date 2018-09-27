@@ -172,13 +172,11 @@ class App extends Component {
           characters the output diverges compared to any string binary encoding.</p>
 
         <p>Because I was already using the output from the <code>murmurhash3js</code> library, I haven't
-          changed its representation.</p>
-
-        <p>Please use the <a href="#comparison">interactive comparison below</a> to check the output
+          changed its representation. Please use the <a href="#comparison">interactive comparison below</a> to check the output
           from the JS functions against the C++ reference implementation.</p>
 
-        <p>The C++ implementation is running in your browser through WebAssembly - check your console! (<a href={links['smhasherWasm']}
-          target="_blank">see how it was compiled here</a>)</p>
+        <p>The C++ implementation is running in your browser through WebAssembly - check the console! (<a href={links['smhasherWasm']}
+          target="_blank">details here</a>)</p>
 
         <h2>Usage</h2>
         <CodeSnippet code={usageSample} language="javascript" />
