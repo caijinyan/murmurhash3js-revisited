@@ -3,8 +3,12 @@ import 'hack';
 import Prism from 'prismjs';
 import "./prism.css";
 
-import usageCodeSample from './code-samples/usage';
-import utf8BytesSample from './code-samples/utf8-bytes';
+import {
+  usageSample,
+  utf8Sample,
+  cPrintx86Sample,
+  cPrintx64Sample
+} from './code-samples';
 
 const notImplemented = () => undefined;
 
@@ -114,6 +118,9 @@ class Table extends React.Component {
   }
 };
 
+const CodeSnippet = ({ code, language }) =>
+  (<pre><code className={"language-" + language}>{code}</code></pre>);
+
 const shortTests = [
   "My hovercraft is full of eels.",
   "My 🚀 is full of 🦎.",
@@ -129,9 +136,10 @@ const allTests = [
 const links = {
   smhasherWasm: "https://github.com/cimi/smhasher",
   forkedFrom: "https://github.com/pid/murmurHash3js",
-  jsPerfUtf8: "https://jsperf.com/string-to-utf-8-bytes",
-  canIUse: "https://caniuse.com/#search=TextEncoder",
-  docs: "https://github.com/cimi/murmurhash3js-revisited/tree/docs"
+  jsPerf: "https://jsperf.com/string-to-utf-8-bytes",
+  caniuse: "https://caniuse.com/#search=TextEncoder",
+  docs: "https://github.com/cimi/murmurhash3js-revisited/tree/docs",
+  issues: "https://github.com/cimi/murmurhash3js-revisited/issues"
 };
 
 class App extends Component {
@@ -145,7 +153,7 @@ class App extends Component {
       <div className="container">
         <h1>MurmurHash3 revisited in JavaScript</h1>
 
-        <h2>Why another variant?</h2>
+        <h2>Why another library?</h2>
 
         <p>All the JS murmurhash3 implementations I've tried either didn't match
           the C++ reference implementation in all cases or didn't implement all three
@@ -171,32 +179,30 @@ class App extends Component {
           target="_blank">(see how it was compiled)</a></p>
 
         <h2>Usage</h2>
-
-        <pre><code className="language-javascript">{usageCodeSample}</code></pre>
-
+        <CodeSnippet code={usageSample} language="javascript" />
 
         <div className="alert alert-warning"><strong>Warning:</strong> encoding strings into
-        bytes <a href={links['jsPerfEncoder']} target="_blank">is much more expensive</a> than calling <code>charCodeAt</code> on
+        bytes <a href={links['jsPerf']} target="_blank">is much more expensive</a> than calling <code>charCodeAt</code> on
         every character.</div>
 
-        <div className="alert alert-warning"><strong>Warning:</strong> <a href={links['canIuse']} target="_blank">older
+        <div className="alert alert-warning"><strong>Warning:</strong> <a href={links['caniuse']} target="_blank">older
         browsers don't have <code>TextEncoder</code></a> and the polyfills I've tried were ~10x slower.</div>
 
         <p>If you <em>know</em> that your input is predominanty made of single byte ASCII characters,
           you can try to decode only when you detect multibyte characters:</p>
 
-        <pre><code className="language-javascript">{utf8BytesSample}</code></pre>
-        <p><a href={links['jsPerfEncoder']}>See a JSPerf evaluation of this method</a>.</p>
+        <CodeSnippet code={utf8Sample} language="javascript" />
+        <p><a href={links['jsPerf']} target="_blank">See a JSPerf evaluation of this method</a>.</p>
 
         <h2 id="comparison">Comparison with other implementations</h2>
 
         <h3>Notes</h3>
         <ul>
-          <li>Only implementations published on npm were considered for testing, and I didn't have time to go through all of them.</li>
-          <li>The output representation was chosen to match murmurhash3js. Each section describes how its output is represented.</li>
-          <li>The C++ reference implementation is run in the browser through WebAssembly
-          (<a href={links['smhasherWasm']} target="_blank">see how it was compiled</a>).</li>
-          <li>If you'd like me to include another implementation in the test, I'm happy to do it. Please cut an issue in the GH repo.</li>
+          <li>Only implementations published on npm were considered, and I didn't have time to go through all of them.</li>
+          <li>All inputs are received as strings, then converted to the format expected by each implementation.</li>
+          <li>The output representation was chosen to match murmurhash3js. Each section describes its format.</li>
+          <li>The C++ reference implementation is runing in the browser through WebAssembly - check the console! (<a href={links['smhasherWasm']} target="_blank">project</a>)</li>
+          <li>If you'd like me to include another implementation in the test, <a href={links['issues']} target="_blank">I'm happy to do it</a>.</li>
         </ul>
 
         <h3>x86  32bit</h3>
@@ -206,10 +212,12 @@ class App extends Component {
 
         <h3>x86 128bit</h3>
         <p>The output is a hex string: the little endian representation of four 32 bit unsigned integers.</p>
+        <CodeSnippet code={cPrintx86Sample} language="clike" />
         <Table hashes={hashes} variant="x86 128bit" inputs={allTests} />
 
         <h3>x64 128bit</h3>
         <p>The output is a hex string: the little endian representation of two 64 bit unsigned integers.</p>
+        <CodeSnippet code={cPrintx64Sample} language="clike" />
         <Table hashes={hashes} variant="x64 128bit" inputs={allTests} />
 
         <div style={{ textAlign: "center"}}>
