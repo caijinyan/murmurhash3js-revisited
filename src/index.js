@@ -19,7 +19,7 @@ function bufferToHex(buffer) {
 
 window.onload = () => {
   // to run locally, the path prefix must be removed as the server runs on localhost:3000/
-  const module = WasmLoader({ locateFile: () => '/murmurhash3js-revisited/SMHasher.wasm' });
+  const module = WasmLoader({ locateFile: () => 'SMHasher.wasm' });
 
   const bytes = str => new TextEncoder().encode(str);
 
