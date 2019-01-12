@@ -6,7 +6,7 @@ All the other JS murmurhash3 implementations I've tried either didn't match the 
 
 This implementation was forked from [pid/murmurhash3js](https://github.com/pid/murmurHash3js). The core algorithm is the same, but there is one important distinction: all variants now expect an array of bytes (i.e. Uint8 or just plain numbers between 0 and 255) as input instead of a string.
 
-## [Documentation and comparison](http://cimi.io/murmurhash3-revisited)
+## [Documentation and comparison](http://cimi.io/murmurhash3js-revisited)
 
 Authors
 -------
